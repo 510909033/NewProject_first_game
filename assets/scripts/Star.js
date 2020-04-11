@@ -30,10 +30,12 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        cc.log("Star onload")
+    },
 
     start () {
-
+        cc.log("Star start")
     },
 
      update (dt) {

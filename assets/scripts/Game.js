@@ -46,13 +46,21 @@ cc.Class({
             default: null,
             type: cc.Label
         },
-
+        startBtn:{
+            default:null,
+            type:cc.Node,
+        },
+        stopBtn:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
-        this.gameStart = false
+         cc.log("Game onload")
+        this.isStart = false
           // 初始化计时器
         this.timer = 0;
         this.starDuration = 0;
@@ -63,28 +71,46 @@ cc.Class({
          // 获取地平面的 y 轴坐标
         this.groundY = this.ground.y + this.ground.height/2;
         cc.log("groudY=" ,this.groundY)
-        // 生成一个新的星星
-        this.spawnNewStar();
+
+        // // 生成一个新的星星
+        // this.spawnNewStar();
 
         //在 player上缓存game对象
         this.player.getComponent('Player').game = this;
+
+        this.startBtn.getComponent("GameStart").game = this
+        this.stopBtn.getComponent("GameStop").game = this
      },
 
     start () {
-
+        cc.log("Game start")
     },
 
     update (dt) {
-        if (this.timer > this.starDuration) {
-            this.gameOver();
-            return;
+        if(this.isStart) {
+            if (this.timer > this.starDuration) {
+                this.gameOver();
+                return;
+            }
+            this.timer += dt;
         }
-        this.timer += dt;
+        
+    },
+
+    gameStart:function() {
+        cc.log("gameStart")
+        this.spawnNewStar();
+        this.player.getComponent('Player').gameStart();
+        this.isStart = true;
     },
 
     gameOver: function () {
-        this.player.stopAllActions(); //停止 player 节点的跳跃动作
-        cc.director.loadScene('game');
+        this.isStart = false;
+        this.player.getComponent('Player').gameOver(); //player gameOver 
+
+        this.stopBtn.active = true;
+        // this.stopBtn.getComponent('GameStop').execStop();
+        // cc.director.loadScene('game');
     },
 
     gainScore: function () {

@@ -32,28 +32,28 @@ cc.Class({
         maxMoveSpeed: 400,
         // 加速度
         accel: 350,
+        //是否可以拾取星星
+        canPicked:true,
     },
 
     // LIFE-CYCLE CALLBACKS:
 
      onLoad () {
-        // 初始化跳跃动作
-        this.jumpAction = this.setJumpAction();
-        this.node.runAction(this.jumpAction);    
-        
-        // 加速度方向开关
+         cc.log("Player onload")
+         // 加速度方向开关
         this.accLeft = false;
         this.accRight = false;
         // 主角当前水平方向速度
         this.xSpeed = 0;
 
-        // 初始化键盘输入监听
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this); 
+        // 初始化跳跃动作
+        this.jumpAction = this.setJumpAction();
+        this.node.runAction(this.jumpAction);    
+        
     },
 
     start () {
-
+        cc.log("Player start")
     },
 
      update (dt) {
@@ -90,6 +90,22 @@ cc.Class({
         // 取消键盘输入监听
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
         cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+    },
+
+    gameStart() {
+        // 初始化键盘输入监听
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this); 
+    },
+    gameOver() {
+        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        cc.systemEvent.off(cc.SystemEvent.EventType.KEY_UP, this.onKeyUp, this);
+         // 加速度方向开关
+         this.accLeft = false;
+         this.accRight = false;
+         // 主角当前水平方向速度
+         this.xSpeed = 0;
+        // this.node.stopAllActions();
     },
 
     setJumpAction: function () {

@@ -24,13 +24,12 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
-
     },
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
-        this._bindMouseEvent();
+        this.node.on(cc.Node.EventType.MOUSE_UP, this.onMouseUp, this);
     },
 
     start () {
@@ -38,21 +37,12 @@ cc.Class({
     },
 
     // update (dt) {},
-
-    onDestroy () {
-        // 取消键盘输入监听
-       
-        
+    execStop:function() {
+        //显示stop图标
+        this.node.active = true;
+        //角色归为
     },
 
-
-
-
-    _bindMouseEvent() {
-        
-        this.node.on(cc.Node.EventType.MOUSE_UP, this.onMouseUp, this);
-        
-    },
     onMouseUp: function(event) {
         let mouseType = event.getButton();
         if (mouseType === cc.Event.EventMouse.BUTTON_LEFT) {
@@ -71,6 +61,6 @@ cc.Class({
           
         }
     },
-    
-    
+
+
 });

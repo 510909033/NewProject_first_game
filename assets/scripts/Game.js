@@ -37,6 +37,10 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        newGround: {
+            default: null,
+            type: cc.Node
+        },
         // player 节点，用于获取主角弹跳的高度，和控制主角行动开关
         player: {
             default: null,
@@ -80,10 +84,49 @@ cc.Class({
 
         this.startBtn.getComponent("GameStart").game = this
         this.stopBtn.getComponent("GameStop").game = this
+
+        //todo del
+        this.minStarDuration = 10000
+        this.maxStarDuration = 10000
+
+        // this.newGround.active = false;
+
+        
+        this.newGround.setPosition(cc.v2(this.ground.getPosition().x - this.ground.width, this.ground.getPosition().y));
      },
 
     start () {
         cc.log("Game start")
+        let t = this
+        setInterval(function(){
+            let windowSize=cc.view.getVisibleSize();
+            cc.log("Game start width, pos, pos2, y1, y2", windowSize.width,
+             t.ground.getPosition().x, t.newGround.getPosition().x,
+             t.ground.getPosition().y, t.newGround.getPosition().y,
+             )
+
+
+
+             let frameSize=cc.view.getFrameSize();
+             tmp = frameSize
+             cc.log("Game frameSize, width,height=", tmp.width,tmp.height)
+            //获取视图的大小，以点为单位
+            // let winSize=cc.director.getWinSize();
+            // tmp = winSize
+            //  cc.log("Game winSize, width,height=", tmp.width,tmp.height)
+            //获取运行场景的可见大小
+            let visiSize=cc.director.getVisibleSize();
+            tmp = visiSize
+             cc.log("Game visiSize, width,height=", tmp.width,tmp.height)
+            //获取视图的大小，以像素为单位
+            let winSizePixels=cc.director.getWinSizeInPixels();
+            tmp = winSizePixels
+             cc.log("Game winSizePixels, width,height=", tmp.width,tmp.height)
+            
+
+
+        },1000);;
+
     },
 
     update (dt) {
@@ -94,13 +137,31 @@ cc.Class({
             }
             this.timer += dt;
         }
+
+     
+        let windowSize=cc.view.getVisibleSize();
+        if(this.ground.getPosition().x > windowSize.width) {
+            this.ground.setPosition(cc.v2(this.newGround.getPosition().x - this.newGround.width, this.newGround.getPosition().y));
+        } else if(this.newGround.getPosition().x > windowSize.width) {
+            this.newGround.setPosition(cc.v2(this.ground.getPosition().x - this.ground.width, this.ground.getPosition().y));
+        } 
+
+        let d = dt * 60
+        this.ground.setPosition(cc.v2(this.ground.getPosition().x + d,this.ground.getPosition().y))
+        this.newGround.setPosition(cc.v2(this.newGround.getPosition().x + d,this.newGround.getPosition().y))
         
+
+        
+
+        // cc.log("Game groud width=", this.ground.width)
     },
 
     gameStart:function() {
         cc.log("gameStart")
         this.spawnNewStar();
         this.player.getComponent('Player').gameStart();
+        this.score = 0;
+        this.gainScore();
         this.isStart = true;
     },
 
@@ -114,7 +175,7 @@ cc.Class({
     },
 
     gainScore: function () {
-        this.score += 1;
+       
         // 更新 scoreDisplay Label 的文字
         this.scoreDisplay.string = 'Score: ' + this.score;
         //cc.log("gainScore = ", this.score)
@@ -137,6 +198,8 @@ cc.Class({
         // 重置计时器，根据消失时间范围随机取一个值
         this.starDuration = this.minStarDuration + Math.random() * (this.maxStarDuration - this.minStarDuration);
         this.timer = 0;
+
+        cc.log("Game spawnNewStar starDuration=", this.starDuration)
     },
 
     getNewStarPosition: function () {

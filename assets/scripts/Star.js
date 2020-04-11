@@ -39,6 +39,10 @@ cc.Class({
     },
 
      update (dt) {
+         if(!this.game.isStart) {
+             cc.log("Start update 执行了destroy")
+            this.node.destroy();  
+         }
          // 每帧判断和主角之间的距离是否小于收集距离
         if (this.getPlayerDistance() < this.pickRadius) {
             // 调用收集行为
@@ -66,6 +70,7 @@ cc.Class({
 
         // 当星星被收集时，调用 Game 脚本中的接口，生成一个新的星星
         this.game.spawnNewStar();
+        this.game.score +=1
 
         // 调用 Game 脚本的得分方法
         this.game.gainScore();

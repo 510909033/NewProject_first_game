@@ -99,29 +99,33 @@ cc.Class({
         cc.log("Game start")
         let t = this
         setInterval(function(){
-            let windowSize=cc.view.getVisibleSize();
-            cc.log("Game start width, pos, pos2, y1, y2", windowSize.width,
-             t.ground.getPosition().x, t.newGround.getPosition().x,
-             t.ground.getPosition().y, t.newGround.getPosition().y,
-             )
+            // let windowSize=cc.view.getVisibleSize();
+            
+            // cc.log("Game start width, pos, pos2, y1, y2", windowSize.width,
+            //  t.ground.getPosition().x, t.newGround.getPosition().x,
+            //  t.ground.getPosition().y, t.newGround.getPosition().y,
+            //  )
 
 
 
-             let frameSize=cc.view.getFrameSize();
-             tmp = frameSize
-             cc.log("Game frameSize, width,height=", tmp.width,tmp.height)
-            //获取视图的大小，以点为单位
+            //  let frameSize=cc.view.getFrameSize();
+            //  tmp = frameSize
+            //  cc.log("Game frameSize, width,height=", tmp.width,tmp.height)
+            
+             // 获取视图的大小，以点为单位
             // let winSize=cc.director.getWinSize();
             // tmp = winSize
             //  cc.log("Game winSize, width,height=", tmp.width,tmp.height)
+            
             //获取运行场景的可见大小
-            let visiSize=cc.director.getVisibleSize();
-            tmp = visiSize
-             cc.log("Game visiSize, width,height=", tmp.width,tmp.height)
+            // let visiSize=cc.director.getVisibleSize();
+            // tmp = visiSize
+            //  cc.log("Game visiSize, width,height=", tmp.width,tmp.height)
+            
             //获取视图的大小，以像素为单位
-            let winSizePixels=cc.director.getWinSizeInPixels();
-            tmp = winSizePixels
-             cc.log("Game winSizePixels, width,height=", tmp.width,tmp.height)
+            // let winSizePixels=cc.director.getWinSizeInPixels();
+            // tmp = winSizePixels
+            //  cc.log("Game winSizePixels, width,height=", tmp.width,tmp.height)
             
 
 
@@ -139,16 +143,16 @@ cc.Class({
         }
 
      
-        let windowSize=cc.view.getVisibleSize();
-        if(this.ground.getPosition().x > windowSize.width) {
-            this.ground.setPosition(cc.v2(this.newGround.getPosition().x - this.newGround.width, this.newGround.getPosition().y));
-        } else if(this.newGround.getPosition().x > windowSize.width) {
-            this.newGround.setPosition(cc.v2(this.ground.getPosition().x - this.ground.width, this.ground.getPosition().y));
-        } 
+        // let windowSize=cc.view.getVisibleSize();
+        // if(this.ground.getPosition().x > windowSize.width) {
+        //     this.ground.setPosition(cc.v2(this.newGround.getPosition().x - this.newGround.width, this.newGround.getPosition().y));
+        // } else if(this.newGround.getPosition().x > windowSize.width) {
+        //     this.newGround.setPosition(cc.v2(this.ground.getPosition().x - this.ground.width, this.ground.getPosition().y));
+        // } 
 
-        let d = dt * 60
-        this.ground.setPosition(cc.v2(this.ground.getPosition().x + d,this.ground.getPosition().y))
-        this.newGround.setPosition(cc.v2(this.newGround.getPosition().x + d,this.newGround.getPosition().y))
+        // let d = dt * 160
+        // this.ground.setPosition(cc.v2(this.ground.getPosition().x + d,this.ground.getPosition().y))
+        // this.newGround.setPosition(cc.v2(this.newGround.getPosition().x + d,this.newGround.getPosition().y))
         
 
         
